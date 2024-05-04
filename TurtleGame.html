@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.3/brython.min.js"
+        integrity="sha512-WfPt+wIQThYHepI1wjxSUvIn3innyL4xLN767LE7C46poe2HHvSbxD0l8bPjS1xsCFUwmmYJyeU+IZZ6A9v4LQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.3/brython_stdlib.js"
+        integrity="sha512-0/y02w+WgPT0ht51LLJORxOr9a/gZE72xhXeC1yXgxeGORBZexl2qil3T15Ka5ptkd0eo2ef7KckroO2/Px6aA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.3/brython.js"
+        integrity="sha512-dNyLxCZuq1cUFnbPxaYQ2JSHwZVhu7B8bJp5WWiKfA1zHNInePPrI5oYP4Vgf6zoPZ3Vnv0hl9PRaQSUSQNkSw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.3/brython_stdlib.min.js"
+        integrity="sha512-zRgn/vBlmXbI1tATyzIayCi4oKhJvM96zGdaU+NIxAIpjU79FbjocroZX/KuLWFmH6y1vGM+tyS0sOlrZ/acVA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body onload='brython()'>
+    <div id="title">
+        <h1>Turtle Race Game</h1>
+        <h3>PICK THE COLOUR AND WIN THE RACE</h3>
+        <h5>
+            In the heart of the bustling turtle race, amidst the thundering cheers and frantic anticipation, there
+            exists a gentle reminder—a whisper that echoes through the excitement, urging us to remember our
+            responsibility. It's a call to safeguard the very sanctuary these magnificent creatures call home. As their
+            tiny feet dart across the track, each stroke of their journey is a testament to resilience and adaptability,
+            but also a stark reminder of the fragility of their habitat. Let us not only revel in the thrill of the race
+            but also pledge to protect their precious sanctuary, ensuring that the whispers of preservation never fade
+            away into the noise of the crowd.</h5>
+    </div>
+
+    <div id="butt">
+        <h2>Choose a Turtle</h2>
+        <button class="buttons red" onclick="selectTurtle(0), style(event)">Red Turtle</button>
+        <button class="buttons orange" onclick="selectTurtle(1)">Orange Turtle</button>
+        <button class="buttons green" onclick="selectTurtle(2)">Green Turtle</button>
+        <button class="buttons blue" onclick="selectTurtle(3)">Blue Turtle</button>
+        <button class="buttons violet" onclick="selectTurtle(4)">Violet Turtle</button>
+        <button class="buttons yellow" onclick="selectTurtle(5)">Yellow Turtle</button>
+
+
+    </div>
+    <div id='turtle-div'>
+    </div>
+    <div id='text-area'></div>
+    <div id='score-area'></div>
+
+
+    <script type="text/javascript">
+        const totalTurtles = [0, 1, 2, 3, 4, 5];
+        var chosen = {
+            value: 0,
+        };
+
+        let scoreDisplay = document.getElementById('score-area');
+        var is_over = 0;
+
+
+        function selectTurtle(value) {
+            window.chosen = { value: 1 };
+            window.chosenTurtle = value;
+            console.log(value);
+            style(event);
+        }
+        function style(event) {
+            let clicked = event.target;
+            clicked.style.width = "175px";
+            clicked.style.height = "60px";
+            clicked.disabled = true;
+        }
+        let textArea = document.getElementById('text-area');
+        color = ['red', 'orange', 'green', 'blue', 'violet', 'yellow'];
+        setInterval(() => {
+            textArea.style.backgroundColor = color[window.flag];
+        }, 25000);
+    </script>
+
+
+
+    <script type='text/python'>
+    try:
+        from browser import document,alert,timer,window
+        import turtle,random,time
+        
+
+
+        turtle.set_defaults(
+            turtle_canvas_wrapper = document['turtle-div']
+        )
+
+        color=['red','orange','green','blue','violet','yellow']
+        y_positions=[-200,-160,-120,-80,-40,0]
+        window.x=0
+        name=["red","orange","green","blue","violet","yellow"]
+        text=["red","orange","green","blue","violet","yellow"]
+        jumps=[1,2,3,4,5,6,7,8,9,10]
+        turtles=[]
+        timmy=turtle.Turtle()
+        timmy.hideturtle()
+        timmy.speed(0)
+        timmy.penup()
+        timmy.goto(-180,-220)
+        timmy.pendown()
+        timmy.left(90)
+        style=('Bodoni MT Black', 30, 'bold')
+        timmy.forward(240)
+        timmy.penup()
+        timmy.forward(5)
+        timmy.pendown()
+        timmy.color
+        timmy.write('START', font=style)
+        timmy.penup()
+        timmy.goto(220,-220)
+        timmy.pendown()
+        timmy.forward(240)
+        timmy.penup()
+        timmy.goto(110,-245)
+        
+        timmy.write('FINISH', font=style)
+        line_positions=[-200,-160,-120,-80,-40,0,40]
+        for r in range(7):
+            lines=turtle.Turtle()
+            lines.hideturtle()
+            lines.speed(0)
+            lines.penup()
+            lines.goto(-180, line_positions[r]-20)
+            lines.pendown()
+            lines.forward(400)  
+
+        
+
+        for r in range(0, 6):
+            turtles.append(turtle.Turtle())
+            turtles[r].shape("turtle")
+            
+            turtles[r].color(color[r])
+            turtles[r].penup()
+            turtles[r].goto(x=-180, y=y_positions[r])
+        
+        flag=0
+        window.flag = 0
+        while window.x!=500:
+            for r in range(0,6):
+                
+                if turtles[r].xcor()>= 200:
+                    flag=r
+                    window.flag = r
+                    window.gameOver=1
+                    window.x=500
+                    
+                    break
+                else:
+                    turtles[r].forward(jumps[random.randint(0,9)])
+
+        def finish_race():
+            document['text-area'].text = f"{name[flag]} won the race"
+        
+        if window.x==500:
+            timer.set_timeout(finish_race, 25000)
+            
+
+    
+        def keep_window_open():
+            document.bind("keydown", lambda event: document['turtle-div'].clear() if event.key == "q" else None)
+            turtle.done()
+
+        keep_window_open()
+    
+    except Exception as err:
+        alert('Exception: ' + str(err))
+    
+    </script>
+
+
+
+
+</body>
+
+</html>

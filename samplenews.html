@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function createCardsS(cardData) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.classList.add(`card-${i}`);
+    card.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-title">${cardData.title}</h5>
+            <img src="${imagesListS[i]}" alt="${cardData.title}" height="200" width="200"><br>
+            <a href="${linksListS[i]}" class="btn btn-primary">Go to article</a>
+        </div>
+    `;
+    i++;
+    return card;
+}
+
+function createCardsI(cardData) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.classList.add(`card-${j}`);
+    card.innerHTML = `
+        <div class="card-body">
+            <h5 class="card-title">${cardData.title}</h5>
+            <img src="${imagesListI[j]}" alt="${cardData.title}" height="200" width="200"><br>
+            <a href="${linksListI[j]}" class="btn btn-primary">Go to article</a>
+        </div>
+    `;
+    j++;
+    return card;
+}
+
+    </script>
+</body>
+</html>

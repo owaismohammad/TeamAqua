@@ -1,0 +1,115 @@
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+@font-face {
+    font-family: "Bauhaus 93";
+    src: url('Bauhaus\ 93\ Regular.ttf');
+}
+
+@font-face {
+    font-family: "Bodoni MT Black";
+    src: url('bod_blar.ttf');
+}
+
+
+
+#title{
+    background-color: aqua;
+    padding: 100;
+    margin: 100;
+
+}
+
+#turtle-div{
+    border: 2px solid brown;
+    background-image: url("ywave.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.buttons{
+    transition:all 1s;
+}
+
+div {
+    background-color: #f2f2f2;
+    padding: 20px;
+   
+    text-align: center;
+}
+
+
+h1 {
+    color:  green;
+    font-family: "Bauhaus 93";
+    font-size: 50px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+h2 {
+    font-family: monospace;
+    text-align: center;
+    font-size: 24px;
+    color: #04cd0a;
+    margin-bottom: 20px;
+}
+
+
+h3 {
+    color: #0905d6;
+    font-family: "Bauhaus 93";
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+h5 {
+    color: green;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+#butt{
+    background-color: rgba(0, 0, 0, 0.877);
+}
+button {
+    
+    color: black; 
+    padding: 10px 20px; 
+    font-size: 16px;
+    border: none;
+    cursor: pointer; 
+    border-radius: 5px; 
+    margin: 5px; 
+}
+.red{
+    background-color: red; 
+}
+.blue{
+    background-color: blue; 
+}
+.green{
+    background-color: green; 
+}
+.yellow{
+    background-color: yellow; 
+}
+.violet{
+    background-color: violet; 
+}
+
+.orange{
+    background-color: orange; 
+}
+#text-area {
+    background-color: #f0f0f0; 
+    font-family: "Bodoni MT Black";
+    color: #333; 
+    padding: 10px;
+    width: 200px; 
+    text-align: center;
+    margin: 20px auto;
+}

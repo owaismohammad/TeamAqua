@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="sketch.css">
+    
+</head>
+<body>
+    <h1>Aqua Sketch Game</h1>
+    <h3>Instructions</h3>
+    <h5>W->UP     S->DOWN     A->LEFT D->RIGHT     SPACE->COLOR-CHANGE     F->CIRCLE  K->LINE-THICK    O->LINE-THIN</h5>
+    <h4>In the Aqua Sketch Game, kids are assigned a water creature facing pollution issues and draw it using a provided reference image. Through their drawings, they learn about marine conservation and the challenges aquatic life faces due to pollution. By engaging in interactive gameplay, the game aims to empower young players with knowledge about protecting our oceans and inspire them to become environmental stewards.</h4>
+    <h2 class="draw-instruction"></h2>
+    <div class="my-container-div">
+        <canvas id="etch-a-sketch-canvas" width="1500" height="750"></canvas>
+    </div>
+    <img src="" alt="" class="animal-img">
+    <button class="submit-button">Submit</button>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <span id="modalClose" class="modal-close">&times;</span>
+          <h2 id="modalTitle"></h2>
+          <p id="modalContent"></p>
+        </div>
+      </div>
+
+
+
+    <script src="sketch.js"></script>
+    
+</body>
+</html>

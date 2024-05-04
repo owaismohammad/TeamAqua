@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+@font-face {
+    font-family: 'mario';
+    src: url('SuperMario256.ttf');
+}
+
+@font-face {
+    font-family: 'every sunday';
+    src: url('Every Sunday.ttf');
+}
+.Nav {
+       
+       overflow: hidden;
+       height: 100px;
+       width: 1050px;
+   }
+   .Nav ul {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+       text-align: center;
+   }
+   .Nav ul li {
+       display: inline;
+   }
+   .Nav ul li a {
+       display: inline-block;
+
+       font-family: 'mario';
+       color: black;
+       font-size: 30px;
+       padding: 14px;
+       border-radius: 7px;
+       margin-bottom: 0px;
+       width:auto;
+       text-decoration: none;
+   }
+   .Nav ul li a:hover {
+       background-color: #ddd;
+       color: black;
+   }
+
+    .quiz-text{
+        font-family: 'every sunday';
+        font-size: 50px;
+    }
+    h1{
+        font-family: 'mario';
+        font-size: 75px;
+    }
+        body {
+            text-align: center;
+            background-color: rgb(233, 142, 233);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1009px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgb(243, 243, 164);
+            padding: 20px;
+        }
+
+        #survey-header {
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .survey-item {
+            display: inline-block;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        #questionBar {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        #optionsBar {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            font-size: 25px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .option {
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #d4d4d4;
+        }
+
+        #resultMessage {
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .survey-message {
+            font-size: 30px;
+            font-family: 'every sunday';
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AQUA SURVEY</h1>
+        <nav class="Nav">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about us.html">About</a></li>
+                <li><a href="edu.html">Learn</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="games.html">Games</a></li>
+                <li><a href="get involved.html">Get Involved</a></li>
+            </ul>
+        </nav>
+        <div class="card">
+            <div id="quiz-container">
+                <nav id="survey-header">
+                    <ul>
+                        <li class="quiz-text">QUESTION NUMBER: <p id="quesNo" class="survey-item"></p>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="questionBar" class="quiz-text"></div>
+                <div id="optionsBar" class="quiz-text"></div>
+            </div>
+            <div id="buttons">
+                <button id="previous" onclick="questionGet('previous')" class="button" disabled>PREVIOUS</button>
+                <button id="next" onclick="questionGet('next')" class="button">NEXT</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+const quiz = [
+    {
+        "question": "How many glasses of water do you typically drink per day?",
+        "answers": [
+            "Less than 4 glasses",
+            "4-6 glasses",
+            "7-9 glasses",
+            "More than 9 glasses"
+        ],
+        "correctAnswers": ["7-9 glasses", "More than 9 glasses"]
+    },
+    {
+        "question": "Do you use a reusable water bottle or disposable plastic bottles?",
+        "answers": [
+            "Reusable water bottle",
+            "Disposable plastic bottles",
+            "Both",
+            "Neither"
+        ],
+        "correctAnswers": ["Reusable water bottle", "Disposable plastic bottles", "Both"]
+    },
+    {
+        "question": "How often do you take showers, and how long do they typically last?",
+        "answers": [
+            "Once a day, less than 5 minutes",
+            "Once a day, 5-10 minutes",
+            "Once a day, more than 10 minutes",
+            "Less than once a day"
+        ],
+        "correctAnswers": [
+            "Once a day, less than 5 minutes"
+        ]
+    },
+    {
+        "question": "Do you turn off the faucet while brushing your teeth?",
+        "answers": [
+            "Always",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ],
+        "correctAnswers":["Always",
+            "Sometimes",
+            "Rarely"]
+    },
+    {
+        "question": "Have you made any efforts to reduce water consumption in your daily routines?",
+        "answers": [
+            "Yes, actively",
+            "Yes, moderately",
+            "No, not really",
+            "No, not at all"
+        ],
+        "correctAnswers": ["Yes, actively", "Yes, moderately"]
+    },
+    {
+        "question": "How often do you water your lawn or garden, and do you use any water-saving techniques?",
+        "answers": [
+            "Daily, without water-saving techniques",
+            "Daily, with water-saving techniques",
+            "Few times a week, without water-saving techniques",
+            "Few times a week, with water-saving techniques"
+        ],
+        "correctAnswers": [
+            "Daily, with water-saving techniques",
+            "Few times a week, with water-saving techniques"
+        ]
+    },
+    {
+        "question": "Do you collect rainwater for household use, such as watering plants?",
+        "answers": [
+            "Yes, regularly",
+            "Sometimes",
+            "Rarely",
+            "No"
+        ],
+        "correctAnswers": ["Yes, regularly", "Sometimes", "Rarely"]
+    },
+    {
+        "question": "Do you know your average daily water usage per person in gallons or liters?",
+        "answers": [
+            "Yes, in gallons",
+            "Yes, in liters",
+            "No"
+        ],
+        "correctAnswers": ["Yes, in gallons",
+            "Yes, in liters"]
+    }
+];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+
+        function questionGet(direction) {
+            if (direction === 'next') {
+                currentQuestion++;
+            } else if (direction === 'previous') {
+                currentQuestion--;
+            }
+
+            showQuestion();
+            updateNavbar();
+        }
+
+        function showQuestion() {
+            const questionElement = document.getElementById('questionBar');
+            const optionsElement = document.getElementById('optionsBar');
+
+            questionElement.innerHTML = quiz[currentQuestion].question;
+            optionsElement.innerHTML = '';
+
+            quiz[currentQuestion].answers.forEach(answer => {
+                const option = document.createElement('div');
+                option.classList.add('option');
+                option.textContent = answer;
+                option.onclick = checkAnswer;
+                optionsElement.appendChild(option);
+            });
+
+            if (currentQuestion === 0) {
+                document.getElementById('previous').disabled = true;
+            } else {
+                document.getElementById('previous').disabled = false;
+            }
+
+            if (currentQuestion === quiz.length - 1) {
+                document.getElementById('next').innerHTML = 'FINISH';
+            } else {
+                document.getElementById('next').innerHTML = 'NEXT';
+                document.getElementById('next').onclick=function(){
+                    if (correctAnswers > incorrectAnswers) {
+                        document.getElementById('quiz-container').innerHTML = `<p class="survey-message">Enhancing your efforts can be as simple as sharing your knowledge with others, monitoring usage, embracing efficient technologies, and advocating for supportive policies. By taking these steps, you not only deepen your impact but also inspire others to join in, amplifying the collective efforts toward sustainability. Every action, big or small, contributes to safeguarding this precious resource for generations to come.</p>`;
+            } else {
+                document.getElementById('quiz-container').innerHTML = `<p class="survey-message">Consider the profound impact your actions can have on the environment, finances, and community resilience. By conserving water, you not only protect ecosystems and mitigate the effects of climate change but also ensure access to clean water for health and well-being. Embracing water conservation practices aligns with sustainable living, fostering a brighter future for all.</p>`;
+            }
+                }
+            }
+        }
+
+        function checkAnswer(event) {
+            const selectedAnswer = event.target.textContent;
+
+            if (quiz[currentQuestion].correctAnswers.includes(selectedAnswer)) {
+                correctAnswers++;
+            } else {
+                incorrectAnswers++;
+            }
+            if (currentQuestion < quiz.length - 1) {
+                questionGet('next');
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const quizContainer = document.getElementById('quiz-container');
+            
+            if (correctAnswers > incorrectAnswers) {
+                quizContainer.innerHTML = `<h2>Survey is Completed!</h2>
+
+                <p class="survey-message">Great job! Keep up the efforts in water conservation!</p>`;
+            } else {
+                quizContainer.innerHTML = `<h2>Survey is Completed!</h2>
+
+                <p class="survey-message">Your contribution to water conservation is important. Let's work together to improve!</p>`;
+            }
+        }
+
+        window.onload = showQuestion;
+    </script>
+</body>
+
+</html>

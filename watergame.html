@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jersey+25+Charted&display=swap"
+        rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            border: 2px solid black;
+        }
+
+        #heading {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Set height to viewport height */
+        }
+        .container::before{
+            content: '';
+            height: 110%;
+            width: 100%;
+            position: absolute;
+            background: url('waves-fish.png');
+            z-index: -1;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 65px;
+            border: 1px solid #888;
+            width: 80%;
+            word-wrap: break-word;
+            text-wrap: wrap;
+            font-family: "Jersey 25 Charted", sans-serif;
+            font-weight:400 ;
+            font-size: 30px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #howToPlayBtn {
+            padding: 5px;
+            margin-right: 30px;
+            width: 140px;
+            position: absolute;
+            top: 63px;
+            left: 350px;
+            font-size: large;
+            font-family: "Jersey 10", sans-serif;
+            transition: all 0.5s;
+        }
+
+        #howToPlayBtn:hover {
+            cursor: pointer;
+            scale: 1.3;
+            background-color: greenyellow;
+        }
+        h2{
+            font-weight: 400;
+            font-family: "Bebas Neue", sans-serif;
+        }
+        #heading{
+            font-family: "Jersey 25 Charted", sans-serif;
+            font-size: 40px;
+            color: white;
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button id="howToPlayBtn">How to Play</button>
+        <h1 id="heading">Aqua Escape: Swim for Survival</h1>
+        <div id="howToPlayModal" class="modal">
+            <div class="modal-content">
+                <span class="close">X</span>
+                <h2>About the Game</h2>
+                <p>Join our brave fish friend on an underwater adventure in 'Aqua Escape: Swim for Survival'! Dive deep into the ocean as you swim through a world of challenges and obstacles. Your mission? To gobble up as many food particles as you can while the water level steadily drops. But be careful! With each passing moment, the water gets lower and lower, making it harder to swim. Can you help the fish survive in this shrinking sea? Test your skills, score points, and learn about the importance of saving water in this exciting underwater journey!</p>
+                <h2>How to Play</h2>
+                <ol>
+                    <li>Use the Arrow keys to control the fish.</li>
+                    <li>Guide the fish to eat the food particles to score points.</li>
+                    <li>Avoid going out of bounds or running out of water.</li>
+                    <li>Click anywhere outside the modal to close it.</li>
+                </ol>
+            </div>
+        </div>
+        <canvas></canvas>
+    </div>
+    <script>
+        let canvas = document.querySelector('canvas');
+        canvas.width = 400;
+        canvas.height = 700;
+        let c = canvas.getContext('2d');
+        let fishX = 200;
+        let fishY = 350;
+        let fishSpeedX = 0;
+        let fishSpeedY = 0;
+        let animationActive = true;
+        let missedFood = 0;
+        let message;
+        let score = 0;
+        addEventListener('resize', function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        })
+        let waterLevelY = 0;
+        let waterImage = new Image();
+        waterImage.src = "waves.png";
+        function waterLevel() {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            c.drawImage(waterImage, 0, waterLevelY, canvas.width + 10, canvas.height);
+            waterLevelY += 0.05;
+            for (let i = 0; i < foodParticles.length; i++) {
+                if (waterLevelY > foodParticles[i].y) {
+                    foodParticles[i].y = randomIntFromRange(waterLevelY, canvas.height);
+                    missedFood++;
+                }
+            }
+            if (fishY + 25 < waterLevelY) {
+                message = "the fish went out of water :(";
+                gameOver(message);
+            }
+            if (waterLevelY > canvas.height) {
+                message = "no water left :(";
+                gameOver(message);
+            }
+        }
+        function drawScore() {
+            if (!animationActive) return;
+            c.font = "40px 'Jersey 25 Charted'";
+            c.fillText("Score: " + score, 130, 30);
+        }
+        function gameOver(message) {
+            animationActive = false;
+            clearInterval(wasteInterval);
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.backgroundColor = "black";
+            c.font = "30px 'Jersey 25 Charted'";
+            c.fillStyle = "greenyellow";
+            c.fillText(`${message}`, canvas.width / 2 - 150, canvas.height / 2); // Draw the message
+
+            // Draw the score below the message
+            c.fillText("Score: " + score, canvas.width / 2 - 60, canvas.height / 2 + 40);
+            c.fillText("Missed Food: " + missedFood, canvas.width / 2 - 80, canvas.height / 2 + 80);
+        }
+        let waste = new Image();
+        waste.src = "waste.png";
+        function produceWaste() {
+            let wasteX = randomIntFromRange(0, canvas.width);
+            let wasteY = randomIntFromRange(waterLevelY, canvas.height);
+            c.drawImage(waste, wasteX, wasteY, 10, 30);
+            console.log("called");
+        }
+        let wasteInterval = setInterval(produceWaste, 5000);
+        function randomIntFromRange(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        let foodImage = new Image();
+        foodImage.src = "food.png";
+        function food(x, y, radius) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.image = foodImage;
+            this.update = () => {
+                if (!animationActive) return;
+                this.draw();
+            }
+            this.draw = () => {
+                c.drawImage(this.image, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+            }
+        };
+
+        let foodParticles;
+        function init() {
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            foodParticles = [];
+
+            // Create the first food particle
+            let x = randomIntFromRange(0, canvas.width);
+            let y = randomIntFromRange(waterLevelY, canvas.height);
+            foodParticles.push(new food(x, y, 40));
+        }
+
+        let fishImage = new Image();
+        fishImage.src = 'fish.png';
+        function drawFish() {
+            if (!animationActive) return;
+            fishX += fishSpeedX;
+            fishY += fishSpeedY;
+            if (fishX + 50 > canvas.width || fishX < 0 || fishY + 50 > canvas.height || fishY < 0) {
+                message = "the fish went out of bounds:(";
+                gameOver(message);// Stop animation if fish goes out of bounds
+                return; // Exit the function to prevent further drawing
+            }
+            c.drawImage(fishImage, fishX, fishY, 50, 50);
+            eatFood();
+        }
+        function ateFood(fishX, fishY, fishRadius, foodX, foodY, foodRadius) {
+            const distance = Math.sqrt((fishX - foodX) ** 2 + (fishY - foodY) ** 2);
+            return distance < (fishRadius + foodRadius);
+        }
+
+        function eatFood() {
+            if (!animationActive) return;
+            for (let i = 0; i < foodParticles.length; i++) {
+                if (ateFood(fishX, fishY, 25, foodParticles[i].x, foodParticles[i].y, 20)) {
+                    foodParticles.splice(i, 1); // Remove eaten food
+                    score++;
+                    console.log("eaten:", score);
+                    if (foodParticles.length === 0) {
+                        addNextFood(); // Add new food only if there are no remaining food particles
+                    }
+                    break; // Exit loop after eating one food particle
+                }
+            }
+        }
+        function addNextFood() {
+            let x = randomIntFromRange(0, canvas.width);
+            let y = randomIntFromRange(waterLevelY, canvas.height);
+            foodParticles.push(new food(x, y, 40));
+        }
+
+        function animate() {
+            if (animationActive) { // Stop animation if flag is false
+                requestAnimationFrame(animate);
+                c.clearRect(0, 0, canvas.width, canvas.height);
+                waterLevel();
+
+                // Draw food particles
+                for (let i = 0; i < foodParticles.length; i++) {
+                    foodParticles[i].update();
+                }
+                drawFish();
+                drawScore();
+            }
+            else {
+                return;
+            }
+        }
+        let modal = document.getElementById("howToPlayModal");
+        let btn = document.getElementById("howToPlayBtn");
+
+        // get the <span> element that closes the modal
+        let span = document.getElementsByClassName("close")[0];
+        btn.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        // close effect 
+        span.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        // close outside modal
+        window.addEventListener("click", function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+        init();
+        produceWaste();
+        animate();
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowUp') {
+                fishSpeedY = -1;
+                fishSpeedX = 0;
+            } else if (event.key === 'ArrowDown') {
+                fishSpeedY = 1;
+                fishSpeedX = 0;
+            } else if (event.key === 'ArrowLeft') {
+                fishSpeedX = -1;
+                fishSpeedY = 0;
+            } else if (event.key === 'ArrowRight') {
+                fishSpeedX = 1;
+                fishSpeedY = 0;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+body{
+    text-align: center;
+}
+
+
+canvas{
+    border: 3px solid brown;
+}
+
+@font-face {
+    font-family: 'Every Sunday';
+    src: url('Every Sunday.ttf');
+}
+
+@font-face {
+    font-family: 'Cakecafe';
+    src: url('Cakecafe.ttf');
+}
+
+h1{
+    font-family: 'Cakecafe';
+    font-size: 50px;
+}
+
+h3 {
+    font-family: 'Every Sunday';
+    font-size: 30px;
+}
+h4 {
+    font-family: 'Every Sunday';
+    font-size: 18px;
+}
+ 
+h5 {
+    font-family: 'Every Sunday';
+    font-size: 18px;
+}
+
+.animal-img{
+    position: absolute;
+    width: 160px;
+    height: 250px;
+    top: 390px; 
+    left: 20px; 
+    z-index: 1;
+
+}
+
+button{
+    border: none;
+    padding:10px 20px;
+    margin-top: 10px ;
+    cursor: pointer;
+}
+
+
+.draw-instruction{
+    position: relative;
+    top: 75px; 
+    left: -47px; 
+    z-index: 1;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+  }
+
+  .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+  }
+
+  .modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+.modal-close:hover,
+.modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
